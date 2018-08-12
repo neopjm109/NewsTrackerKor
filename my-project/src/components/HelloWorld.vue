@@ -84,12 +84,44 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Querystring from 'query-string';
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      clientId: "XEAIIKMqBSN1z1sO08GX",
+      clientSecret: "NN7c54r_Ue"
     }
+  },
+  created() {
+    var clientId = this.clientId;
+    var clientSecret = this.clientSecret
+
+    var a = axios({
+      method: "GET",
+      url: "/naver/v1/search/news.json",
+      crossDomain: true,
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
+        "X-Naver-Client-Id": clientId,
+        "X-Naver-Client-Secret": clientSecret
+      },
+      params: {
+        "query": "트와이스"
+      }
+    }).then( response => { 
+        console.log("SUCCESS");
+        console.log(response);
+        console.log(response.headers);
+      }) // SUCCESS
+      .catch( response => { 
+        console.log(response);
+      }); // ERROR
   }
 }
 </script>
